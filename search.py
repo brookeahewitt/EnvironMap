@@ -8,34 +8,32 @@ key = 'AIzaSyCRkh-Rq03zC0Leg6McXYuqsEYRM4f6Tok' #REMOVE KEY
 
 url = 'https://maps.googleapis.com/maps/api/place/search/json'
 
-radius = '20000'
 
-
-def restaurant(curr_location):
+def restaurant(curr_location, radius):
     param_type = 'restaurant|cafe'
     keyword = 'vegetarian|vegan|plant based'
-    return do_search(param_type, keyword, curr_location)
+    return do_search(param_type, keyword, curr_location, radius)
 
 
-def shopping(curr_location):
+def shopping(curr_location, radius):
     param_type = 'store'
     keyword = 'second hand|used|thrift|vintage'
-    return do_search(param_type, keyword, curr_location)
+    return do_search(param_type, keyword, curr_location, radius)
 
 
-def transportation(curr_location):
+def transportation(curr_location, radius):
     param_type = 'bicycle_store|bus_station'
     keyword = ''
-    return do_search(param_type, keyword, curr_location)
+    return do_search(param_type, keyword, curr_location, radius)
 
-def parks(curr_location):
+def parks(curr_location, radius):
     param_type = 'park'
     keyword = ''
-    return do_search(param_type, keyword, curr_location)
+    return do_search(param_type, keyword, curr_location, radius)
 
 
-def do_search(param_type, keyword, curr_location):
-    global radius, key
+def do_search(param_type, keyword, curr_location, radius):
+    global key
     params = {
         'location': curr_location,
         'radius': radius,

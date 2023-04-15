@@ -10,6 +10,9 @@ from ipregistry import IpregistryClient
 #create tkinter window
 import search
 
+radius = 81271.67
+
+
 root = ctk.CTk()
 root.title("EnvironMap")
 root.geometry(f"{800}x{600}")
@@ -30,16 +33,29 @@ latitude = ipInfo_access['location']['latitude']
 longitude = ipInfo_access['location']['longitude']
 
 
+enterLocation = ctk.CTkEntry(master=root, placeholder_text="Search for a Location")
+enterLocation.pack(padx=20, pady=20)
+enterLocation.place(relx=0.5, rely=0.05, anchor=ctk.CENTER)
+def get_location():
+    wanted_area = enterLocation.get()
+
+    enterLocation.delete(0, END)
+
+
+get_location_button = ctk.CTkButton(master=root, width=120, height=32, border_width=0, corner_radius=8, text="Submit Location", command=get_location)
+get_location_button.place(relx=0.68, rely=0.05, anchor=ctk.CENTER)
+
+
+
 coords = str(latitude) + "," + str(longitude)
 print(coords)
 
-locations = search.parks(coords)
+locations = search.parks(coords, radius)
 markers = []
+
 for i in range(len(locations)):
     marker = "marker" + str(i)
     markers.append(marker)
-
-print(markers)
 
 for i in range(len(locations)):
     markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
@@ -55,7 +71,7 @@ map_widget.set_zoom(15)
 min_w = 50 # Minimum width of the frame
 max_w = 365 # Maximum width of the frame
 cur_width = min_w # Increasing width of the frame
-expanded = False # Check if it is completely exanded
+expanded = False # Check if it is completely expanded
 
 def expand():
     global cur_width, expanded

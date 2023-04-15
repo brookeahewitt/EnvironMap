@@ -174,6 +174,72 @@ def click_bikeRoutes():
         markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
         markers[i].set_text(locations[i][0])
 
+def click_parks():
+    locations = search.parks(coords)
+    markers = []
+    map_widget.delete_all_marker()
+    for i in range(len(right_labels)):
+        right_labels[i].destroy()
+    y_val = 0.1
+    for i in range(len(locations)):
+        if (y_val > 1):
+            break
+        location_text = locations[i][0] + "\n" + locations[i][1]
+        label = ctk.CTkLabel(master=root, text=location_text, width=120, height=25, fg_color=("white", "gray75"), corner_radius=8)
+        label.place(relx=0.9, rely=y_val, anchor=ctk.CENTER)
+        right_labels.append(label)
+        y_val += 0.05
+    for i in range(len(locations)):
+        marker = "marker" + str(i)
+        markers.append(marker)
+    for i in range(len(locations)):
+        markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
+        markers[i].set_text(locations[i][0])
+
+def click_gardens():
+    locations = search.publicgardens(coords)
+    markers = []
+    map_widget.delete_all_marker()
+    for i in range(len(right_labels)):
+        right_labels[i].destroy()
+    y_val = 0.1
+    for i in range(len(locations)):
+        if (y_val > 1):
+            break
+        location_text = locations[i][0] + "\n" + locations[i][1]
+        label = ctk.CTkLabel(master=root, text=location_text, width=120, height=25, fg_color=("white", "gray75"), corner_radius=8)
+        label.place(relx=0.9, rely=y_val, anchor=ctk.CENTER)
+        right_labels.append(label)
+        y_val += 0.05
+    for i in range(len(locations)):
+        marker = "marker" + str(i)
+        markers.append(marker)
+    for i in range(len(locations)):
+        markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
+        markers[i].set_text(locations[i][0])
+
+def click_hiking():
+    locations = search.hiking(coords)
+    markers = []
+    map_widget.delete_all_marker()
+    for i in range(len(right_labels)):
+        right_labels[i].destroy()
+    y_val = 0.1
+    for i in range(len(locations)):
+        if (y_val > 1):
+            break
+        location_text = locations[i][0] + "\n" + locations[i][1]
+        label = ctk.CTkLabel(master=root, text=location_text, width=120, height=25, fg_color=("white", "gray75"), corner_radius=8)
+        label.place(relx=0.9, rely=y_val, anchor=ctk.CENTER)
+        right_labels.append(label)
+        y_val += 0.05
+    for i in range(len(locations)):
+        marker = "marker" + str(i)
+        markers.append(marker)
+    for i in range(len(locations)):
+        markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
+        markers[i].set_text(locations[i][0])
+
 #LightMode/DarkMode
 #customtkinter.set_appearance_mode("System")
 
@@ -227,9 +293,9 @@ def fill():
         trainsStations_b.configure(text='Train Stations', font=(0, 21))
         bikeRoutes_b.configure(text='Bike Stores', font=(0, 21))
 
-        nature_b.configure(text='Nature', font=(0, 21))
+        nature_b.configure(text='Recreation', font=(0, 21))
         parks_b.configure(text='Parks', font=(0, 21))
-        publicGardens_b.configure(text='Public Gardens', font=(0, 21))
+        publicGardens_b.configure(text='Campgrounds', font=(0, 21))
         hikingTrails_b.configure(text='Hiking Trails', font=(0, 21))
 
         back_food_b.configure(text='Back to Main Menu', font=(0, 21))
@@ -344,9 +410,9 @@ trainsStations_b = ctk.CTkButton(transportationSubframe, fg_color='orange', comm
 bikeRoutes_b = ctk.CTkButton(transportationSubframe, fg_color='orange', command=click_bikeRoutes)
 
 nature_b = ctk.CTkButton(frame, fg_color='orange', command=showNatureMenu)
-parks_b = ctk.CTkButton(natureSubframe, fg_color='orange')
-publicGardens_b = ctk.CTkButton(natureSubframe, fg_color='orange')
-hikingTrails_b = ctk.CTkButton(natureSubframe, fg_color='orange')
+parks_b = ctk.CTkButton(natureSubframe, fg_color='orange', command=click_parks)
+publicGardens_b = ctk.CTkButton(natureSubframe, fg_color='orange', command=click_gardens)
+hikingTrails_b = ctk.CTkButton(natureSubframe, fg_color='orange', command=click_hiking)
 
 back_food_b = ctk.CTkButton(foodSubframe, fg_color='orange', command=backFoodButton)
 back_shopping_b = ctk.CTkButton(shoppingSubframe, fg_color='orange', command=backShoppingButton)

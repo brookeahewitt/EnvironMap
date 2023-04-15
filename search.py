@@ -22,6 +22,17 @@ def parks(curr_location):
     keyword = ''
     return do_search(param_type, keyword, curr_location)
 
+def publicgardens(curr_location):
+    param_type = 'campground'
+    keyword = ''
+    return do_search(param_type, keyword, curr_location)
+
+def hiking(curr_location):
+    param_type = ''
+    keyword = ''
+    return do_search(param_type, keyword, curr_location)
+
+
 def shopping(curr_location):
     param_type = 'store'
     keyword = 'second hand|used|thrift|vintage'

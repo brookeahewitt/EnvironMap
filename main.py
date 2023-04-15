@@ -1,4 +1,6 @@
 from tkinter import *
+
+import customtkinter
 import customtkinter as ctk
 import tkintermapview
 import requests
@@ -12,11 +14,11 @@ import search
 
 root = ctk.CTk()
 root.title("EnvironMap")
-root.geometry(f"{800}x{600}")
+root.geometry(f"{1400}x{800}")
 root.resizable(width=False, height=False)
 
 #create a map widget
-map_widget = tkintermapview.TkinterMapView(root, width=1800, height=1200, corner_radius=0)
+map_widget = tkintermapview.TkinterMapView(root, width=2000, height=1400, corner_radius=0)
 map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 #set map to google maps
@@ -51,21 +53,46 @@ def get_location():
 get_location_button = ctk.CTkButton(master=root, width=120, height=32, border_width=0, corner_radius=8, text="Submit Location", command=get_location)
 get_location_button.place(relx=0.68, rely=0.05, anchor=ctk.CENTER)
 
+rightSide = ctk.CTkFrame(master=root, height=1200, width=300, fg_color='light blue')
+rightSide.place(relx=1, rely=0.5, anchor=ctk.E)
+
+places_label = ctk.CTkLabel(master=root, text="Places", width=120, height=25, fg_color=("white", "gray75"), corner_radius=8)
+places_label.place(relx=0.9, rely=0.03, anchor=ctk.CENTER)
+
 coords = str(latitude) + "," + str(longitude)
 print(coords)
 
+# CODE TO PUT IN BUTTON --------
 locations = search.restaurant(coords)
-
+print(locations)
 markers = []
+global right_labels
+right_labels = []
+map_widget.delete_all_marker()
+
+for i in range(len(right_labels)):
+    right_labels[i].destroy()
+
+y_val = 0.1
+
+for i in range(len(locations)):
+    if (y_val > 1):
+        break
+    location_text = locations[i][0] + "\n" + locations[i][1]
+    label = ctk.CTkLabel(master=root, text=location_text, width=120, height=25, fg_color=("white", "gray75"), corner_radius=8)
+    label.place(relx=0.9, rely=y_val, anchor=ctk.CENTER)
+    right_labels.append(label)
+    y_val += 0.05
+
 for i in range(len(locations)):
     marker = "marker" + str(i)
     markers.append(marker)
 
-print(markers)
-
 for i in range(len(locations)):
     markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
     markers[i].set_text(locations[i][0])
+
+#END OF CODE TO PUT IN BUTTON -----------
 
 #LightMode/DarkMode
 #customtkinter.set_appearance_mode("System")

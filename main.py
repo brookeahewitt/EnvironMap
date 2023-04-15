@@ -44,23 +44,28 @@ def get_location():
 get_location_button = ctk.CTkButton(master=root, width=120, height=32, border_width=0, corner_radius=8, text="Submit Location", command=get_location)
 get_location_button.place(relx=0.68, rely=0.05, anchor=ctk.CENTER)
 
+coords = str(latitude) + "," + str(longitude)
+print(coords)
+
+locations = search.restaurant(coords)
+
 markers = []
-for i in range(len(search.locations)):
+for i in range(len(locations)):
     marker = "marker" + str(i)
     markers.append(marker)
 
 print(markers)
 
-for i in range(len(search.locations)):
-    markers[i] = map_widget.set_position(search.locations[i][2], search.locations[i][3], marker=True)
-    markers[i].set_text(search.locations[i][0])
+for i in range(len(locations)):
+    markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
+    markers[i].set_text(locations[i][0])
 
 #LightMode/DarkMode
 #customtkinter.set_appearance_mode("System")
 
 #Moving Side Menu - Source https://stackoverflow.com/questions/66858214/tkinter-side-bar
 min_w = 50 # Minimum width of the frame
-max_w = 365 # Maximum width of the frame #200
+max_w = 365 # Maximum width of the frame
 cur_width = min_w # Increasing width of the frame
 expanded = False # Check if it is completely expanded
 

@@ -5,6 +5,8 @@ import customtkinter as ctk
 import tkintermapview
 import requests
 import json
+
+from PIL import Image, ImageTk
 from ipregistry import IpregistryClient
 
 #google maps starter code from https://github.com/TomSchimansky/TkinterMapView
@@ -21,8 +23,8 @@ root.geometry(f"{1400}x{800}")
 root.resizable(width=False, height=False)
 
 #create a map widget
-map_widget = tkintermapview.TkinterMapView(root, width=2000, height=1400, corner_radius=0)
-map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
+map_widget = tkintermapview.TkinterMapView(root, width=2100, height=1500, corner_radius=0)
+map_widget.place(relx=0.45, rely=0.5, anchor=CENTER)
 
 #set map to google maps
 map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
@@ -39,9 +41,11 @@ longitude = ipInfo_access['location']['longitude']
 #set current widget position by address
 map_widget.set_position(latitude, longitude)
 
-enterLocation = ctk.CTkEntry(master=root, placeholder_text="Search for a Location")
+search_light = ImageTk.PhotoImage(Image.open('search_light.png').resize((70,70),Image.ANTIALIAS))
+
+enterLocation = ctk.CTkEntry(master=root, placeholder_text="Search for a Location...", width=250)
 enterLocation.pack(padx=20, pady=20)
-enterLocation.place(relx=0.5, rely=0.05, anchor=ctk.CENTER)
+enterLocation.place(relx=0.43, rely=0.05, anchor=ctk.CENTER)
 def get_location():
     global latitude, longitude
     wanted_area = enterLocation.get()
@@ -53,13 +57,13 @@ def get_location():
 
 
 
-get_location_button = ctk.CTkButton(master=root, width=120, height=32, border_width=0, corner_radius=8, text="Submit Location", command=get_location)
-get_location_button.place(relx=0.68, rely=0.05, anchor=ctk.CENTER)
+get_location_button = ctk.CTkButton(master=root, width=90, height=32, border_width=0, corner_radius=8, fg_color ='#80ed99', hover_color='#80ed99', image=search_light, text="", command=get_location)
+get_location_button.place(relx=0.57, rely=0.05, anchor=ctk.CENTER)
 
-rightSide = ctk.CTkFrame(master=root, height=1200, width=300, fg_color='light blue')
+rightSide = ctk.CTkFrame(master=root, height=1200, width=300, fg_color='#4de3e8')
 rightSide.place(relx=1, rely=0.5, anchor=ctk.E)
 
-places_label = ctk.CTkLabel(master=root, text="Places", width=120, height=25, fg_color=("white", "gray75"), corner_radius=8)
+places_label = ctk.CTkLabel(master=root, text="Places", width=120, height=25, fg_color=("white", "gray75"), font=('Arial', 24, 'bold'), corner_radius=8)
 places_label.place(relx=0.9, rely=0.03, anchor=ctk.CENTER)
 
 coords = str(latitude) + "," + str(longitude)
@@ -260,8 +264,8 @@ def click_hiking():
 #customtkinter.set_appearance_mode("System")
 
 #Moving Side Menu - Source https://stackoverflow.com/questions/66858214/tkinter-side-bar
-min_w = 50 # Minimum width of the frame
-max_w = 380 # Maximum width of the frame
+min_w = 240 # Minimum width of the frame
+max_w = 500 # Maximum width of the frame
 cur_width = min_w # Increasing width of the frame
 expanded = False # Check if it is completely expanded
 
@@ -297,43 +301,43 @@ def contract():
 def fill():
     if expanded:  # If the frame is expanded
     # Show a text, and remove the image
-        food_b.configure(text='Food', font=(0, 21))
+        food_b.configure(text='Food', image='', font=(0, 21))
         restaurant_b.configure(text='Restaurants', font=(0, 21))
         farmersMarket_b.configure(text='Farmers Market', font=(0, 21))
 
-        shopping_b.configure(text='Shopping', font=(0, 21))
+        shopping_b.configure(text='Shopping', image='', font=(0, 21))
         secondHand_b.configure(text='Second Hand Stores', font=(0, 21))
 
-        transportation_b.configure(text='Transportation', font=(0, 21))
+        transportation_b.configure(text='Transportation', image='', font=(0, 21))
         busStops_b.configure(text='Bus Stops', font=(0, 21))
         trainsStations_b.configure(text='Train Stations', font=(0, 21))
         bikeRoutes_b.configure(text='Bike Stores', font=(0, 21))
 
-        nature_b.configure(text='Recreation', font=(0, 21))
+        nature_b.configure(text='Recreation', image='', font=(0, 21))
         parks_b.configure(text='Parks', font=(0, 21))
         publicGardens_b.configure(text='Campgrounds', font=(0, 21))
         hikingTrails_b.configure(text='Hiking Trails', font=(0, 21))
 
-        back_food_b.configure(text='Back to Main Menu', font=(0, 21))
-        back_shopping_b.configure(text='Back to Main Menu', font=(0, 21))
-        back_transportation_b.configure(text='Back to Main Menu', font=(0, 21))
-        back_nature_b.configure(text='Back to Main Menu', font=(0, 21))
+        back_food_b.configure(text='', font=(0, 21))
+        back_shopping_b.configure(text='', font=(0, 21))
+        back_transportation_b.configure(text='', font=(0, 21))
+        back_nature_b.configure(text='', font=(0, 21))
 
     else:
         # Bring the image back
-        food_b.configure(text='', font=(0, 21))
+        food_b.configure(text='', image=food_light, font=(0, 21))
         restaurant_b.configure(text='', font=(0, 21))
         farmersMarket_b.configure(text='', font=(0, 21))
 
-        shopping_b.configure(text='', font=(0, 21))
+        shopping_b.configure(text='', image=shopping_light, font=(0, 21))
         secondHand_b.configure(text='', font=(0, 21))
 
-        transportation_b.configure(text='', font=(0, 21))
+        transportation_b.configure(text='', image=bike_light, font=(0, 21))
         busStops_b.configure(text='', font=(0, 21))
         trainsStations_b.configure(text='', font=(0, 21))
         bikeRoutes_b.configure(text='', font=(0, 21))
 
-        nature_b.configure(text='', font=(0, 21))
+        nature_b.configure(text='', image=parks_light, font=(0, 21))
         parks_b.configure(text='', font=(0, 21))
         publicGardens_b.configure(text='', font=(0, 21))
         hikingTrails_b.configure(text='', font=(0, 21))
@@ -345,21 +349,21 @@ def fill():
 
 
 root.update()  # For the width to get updated
-frame = Frame(root, bg='orange', width=50, height=root.winfo_height())
+frame = Frame(root, bg='#80ed99', width=170, height=root.winfo_height())
 frame.grid(row=0, column=0)
 
 #Sub Menus
-foodSubframe = Frame(root, bg='blue', width=50, height=root.winfo_height())
-shoppingSubframe = Frame(root, bg='red', width=50, height=root.winfo_height())
-transportationSubframe = Frame(root, bg='yellow', width=50, height=root.winfo_height())
-natureSubframe = Frame(root, bg='green', width=50, height=root.winfo_height())
+foodSubframe = Frame(root, bg='#4de3e8', width=50, height=root.winfo_height())
+shoppingSubframe = Frame(root, bg='#4de3e8', width=50, height=root.winfo_height())
+transportationSubframe = Frame(root, bg='#4de3e8', width=50, height=root.winfo_height())
+natureSubframe = Frame(root, bg='#4de3e8', width=50, height=root.winfo_height())
 
 #Food
 def showFoodMenu():
     frame.grid_remove()
     foodSubframe.grid(row=0, column=0)
     restaurant_b.grid(row=0, column=0, pady=10)
-    farmersMarket_b.grid(row=1, column=0, pady=10)
+
     back_food_b.grid(row=2, column=0, pady=425)
     foodSubframe.bind('<Enter>', lambda e: expand())
     foodSubframe.bind('<Leave>', lambda e: contract())
@@ -411,30 +415,40 @@ def backNatureButton():
     natureSubframe.grid_remove()
     frame.grid(row=0, column=0)
 
+food_light = ImageTk.PhotoImage(Image.open('food_light.png').resize((120,120),Image.ANTIALIAS))
+parks_light = ImageTk.PhotoImage(Image.open('parks_light.png').resize((120,120),Image.ANTIALIAS))
+bike_light = ImageTk.PhotoImage(Image.open('bike_light.png').resize((120,120),Image.ANTIALIAS))
+shopping_light = ImageTk.PhotoImage(Image.open('shopping_light.png').resize((120,120),Image.ANTIALIAS))
+
 
 # Make the buttons with the icons to be shown #PUT SUBMENUCOMMANDS HERE!!!
-food_b = ctk.CTkButton(frame,fg_color= 'orange', command=showFoodMenu)
-restaurant_b = ctk.CTkButton(foodSubframe, fg_color='orange', command=click_restaurant)
-farmersMarket_b = ctk.CTkButton(foodSubframe, fg_color='orange')
+food_b = ctk.CTkButton(frame,fg_color= '#80ed99',image=food_light, hover_color='#80ed99', command=showFoodMenu)
+restaurant_b = ctk.CTkButton(foodSubframe, fg_color='#80ed99', hover_color='#80ed99',command=click_restaurant)
+farmersMarket_b = ctk.CTkButton(foodSubframe, fg_color='#80ed99',hover_color='#80ed99',)
 
-shopping_b = ctk.CTkButton(frame, fg_color='orange', command=showShoppingMenu)
-secondHand_b = ctk.CTkButton(shoppingSubframe, fg_color='orange', command=click_secondHand)
+shopping_b = ctk.CTkButton(frame, fg_color='#80ed99', image=shopping_light, hover_color='#80ed99',command=showShoppingMenu)
+secondHand_b = ctk.CTkButton(shoppingSubframe, fg_color='#80ed99', hover_color='#80ed99',command=click_secondHand)
 
-transportation_b = ctk.CTkButton(frame, fg_color='orange', command=showTransportationMenu)
-busStops_b = ctk.CTkButton(transportationSubframe, fg_color='orange', command=click_busStops)
-trainsStations_b = ctk.CTkButton(transportationSubframe, fg_color='orange', command=click_trainStations)
-bikeRoutes_b = ctk.CTkButton(transportationSubframe, fg_color='orange', command=click_bikeRoutes)
+transportation_b = ctk.CTkButton(frame, fg_color='#80ed99', image=bike_light, hover_color='#80ed99',command=showTransportationMenu)
+busStops_b = ctk.CTkButton(transportationSubframe, fg_color='#80ed99', hover_color='#80ed99',command=click_busStops)
+trainsStations_b = ctk.CTkButton(transportationSubframe, fg_color='#80ed99', hover_color='#80ed99',command=click_trainStations)
+bikeRoutes_b = ctk.CTkButton(transportationSubframe, fg_color='#80ed99', hover_color='#80ed99',command=click_bikeRoutes)
 
-nature_b = ctk.CTkButton(frame, fg_color='orange', command=showNatureMenu)
-parks_b = ctk.CTkButton(natureSubframe, fg_color='orange', command=click_parks)
-publicGardens_b = ctk.CTkButton(natureSubframe, fg_color='orange', command=click_gardens)
-hikingTrails_b = ctk.CTkButton(natureSubframe, fg_color='orange', command=click_hiking)
+nature_b = ctk.CTkButton(frame, fg_color='#80ed99', hover_color='#80ed99',image=parks_light,command=showNatureMenu)
+parks_b = ctk.CTkButton(natureSubframe, fg_color='#80ed99',hover_color='#80ed99', command=click_parks)
+publicGardens_b = ctk.CTkButton(natureSubframe, fg_color='#80ed99', hover_color='#80ed99', command=click_gardens)
+hikingTrails_b = ctk.CTkButton(natureSubframe, fg_color='#80ed99', hover_color='#80ed99',command=click_hiking)
 
-back_food_b = ctk.CTkButton(foodSubframe, fg_color='orange', command=backFoodButton)
-back_shopping_b = ctk.CTkButton(shoppingSubframe, fg_color='orange', command=backShoppingButton)
-back_transportation_b = ctk.CTkButton(transportationSubframe, fg_color='orange', command=backTransportationButton)
-back_nature_b = ctk.CTkButton(natureSubframe, fg_color='orange', command=backNatureButton)
+search_light = ImageTk.PhotoImage(Image.open('search_light.png').resize((70,70),Image.ANTIALIAS))
 
+back_food_b = ctk.CTkButton(foodSubframe, fg_color='#80ed99', hover_color='#80ed99',image=search_light, command=backFoodButton)
+back_shopping_b = ctk.CTkButton(shoppingSubframe, fg_color='#80ed99', hover_color='#80ed99',image=search_light, command=backShoppingButton)
+back_transportation_b = ctk.CTkButton(transportationSubframe, fg_color='#80ed99', hover_color='#80ed99', image=search_light, command=backTransportationButton)
+back_nature_b = ctk.CTkButton(natureSubframe, fg_color='#80ed99', image=search_light, hover_color='#80ed99',command=backNatureButton)
+
+logo_light = ImageTk.PhotoImage(Image.open('logo_light.png'),Image.ANTIALIAS)
+logo_label = ctk.CTkLabel(master=root, image=logo_light, text="")
+logo_label.place(relx=0.45, rely=0.95, anchor=ctk.CENTER)
 
 # Put them on the frame
 food_b.grid(row=0, column=0, pady=10)

@@ -3,6 +3,7 @@ import customtkinter as ctk
 import tkintermapview
 import requests
 import json
+from geopy.geocoders import Nominatim
 
 key = 'AIzaSyCRkh-Rq03zC0Leg6McXYuqsEYRM4f6Tok' #REMOVE KEY
 
@@ -50,3 +51,8 @@ def do_search(param_type, keyword, curr_location):
         locations.append([name, address, lat, lng])
 
     return locations
+
+def search_address(address):
+    geolocator = Nominatim(user_agent="myGeocoder")
+    location = geolocator.geocode(address)
+    return [location.latitude, location.longitude]

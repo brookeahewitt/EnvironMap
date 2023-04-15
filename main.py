@@ -22,6 +22,8 @@ map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 #set map to google maps
 map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
+global latitude, longitude
+
 ipInfo_key = 'tkln3hmqu74nehbl' #REMOVE KEY
 client = IpregistryClient(ipInfo_key)
 ipInfo = client.lookup()
@@ -36,9 +38,14 @@ enterLocation = ctk.CTkEntry(master=root, placeholder_text="Search for a Locatio
 enterLocation.pack(padx=20, pady=20)
 enterLocation.place(relx=0.5, rely=0.05, anchor=ctk.CENTER)
 def get_location():
+    global latitude, longitude
     wanted_area = enterLocation.get()
-
+    coords = search.search_address(wanted_area)
     enterLocation.delete(0, END)
+    latitude = coords[0]
+    longitude = coords[1]
+    map_widget.set_position(latitude, longitude)
+
 
 
 get_location_button = ctk.CTkButton(master=root, width=120, height=32, border_width=0, corner_radius=8, text="Submit Location", command=get_location)

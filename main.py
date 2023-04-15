@@ -5,6 +5,7 @@ import tkintermapview
 
 #create tkinter window
 root_tk = tkinter.Tk()
+root_tk.title("EnvironMap")
 root_tk.geometry(f"{800}x{600}")
 
 #create a map widget

@@ -5,7 +5,7 @@ import requests
 import json
 
 
-key =
+key = key #REMOVE KEY
 
 url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 params = {

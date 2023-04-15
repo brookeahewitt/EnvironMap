@@ -3,7 +3,7 @@ import customtkinter as ctk
 import tkintermapview
 import requests
 import json
-
+from ipregistry import IpregistryClient
 
 #google maps starter code from https://github.com/TomSchimansky/TkinterMapView
 
@@ -23,8 +23,15 @@ map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 #set map to google maps
 map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
-#set current widget position by address (change to current)
-map_widget.set_position(38.033554, -78.507980)
+ipInfo_key = key #REMOVE KEY
+client = IpregistryClient(ipInfo_key)
+ipInfo = client.lookup()
+ipInfo_access = json.loads(str(ipInfo))
+latitude = ipInfo_access['location']['latitude']
+longitude = ipInfo_access['location']['latitude']
+
+#set current widget position by address
+map_widget.set_position(latitude, longitude)
 
 markers = []
 for i in range(len(search.locations)):

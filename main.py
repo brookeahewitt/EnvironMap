@@ -22,15 +22,26 @@ map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 #set map to google maps
 map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
-ipInfo_key = key #REMOVE KEY
+ipInfo_key = 'tkln3hmqu74nehbl' #REMOVE KEY
 client = IpregistryClient(ipInfo_key)
 ipInfo = client.lookup()
 ipInfo_access = json.loads(str(ipInfo))
 latitude = ipInfo_access['location']['latitude']
-longitude = ipInfo_access['location']['latitude']
+longitude = ipInfo_access['location']['longitude']
 
 #set current widget position by address
 map_widget.set_position(latitude, longitude)
+
+enterLocation = ctk.CTkEntry(master=root, placeholder_text="Search for a Location")
+enterLocation.pack(padx=20, pady=20)
+enterLocation.place(relx=0.5, rely=0.05, anchor=ctk.CENTER)
+def get_location():
+    wanted_area = enterLocation.get()
+    enterLocation.delete(0, END)
+
+
+get_location_button = ctk.CTkButton(master=root, width=120, height=32, border_width=0, corner_radius=8, text="Submit Location", command=get_location)
+get_location_button.place(relx=0.68, rely=0.05, anchor=ctk.CENTER)
 
 markers = []
 for i in range(len(search.locations)):
@@ -48,9 +59,9 @@ for i in range(len(search.locations)):
 
 #Moving Side Menu - Source https://stackoverflow.com/questions/66858214/tkinter-side-bar
 min_w = 50 # Minimum width of the frame
-max_w = 200 # Maximum width of the frame
+max_w = 365 # Maximum width of the frame #200
 cur_width = min_w # Increasing width of the frame
-expanded = False # Check if it is completely exanded
+expanded = False # Check if it is completely expanded
 
 def expand():
     global cur_width, expanded

@@ -12,11 +12,11 @@ import search
 
 root = ctk.CTk()
 root.title("EnvironMap")
-root.geometry(f"{800}x{600}")
+root.geometry(f"{1400}x{800}")
 root.resizable(width=False, height=False)
 
 #create a map widget
-map_widget = tkintermapview.TkinterMapView(root, width=1800, height=1200, corner_radius=0)
+map_widget = tkintermapview.TkinterMapView(root, width=2000, height=1400, corner_radius=0)
 map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 #set map to google maps
@@ -50,6 +50,9 @@ def get_location():
 
 get_location_button = ctk.CTkButton(master=root, width=120, height=32, border_width=0, corner_radius=8, text="Submit Location", command=get_location)
 get_location_button.place(relx=0.68, rely=0.05, anchor=ctk.CENTER)
+
+rightSide = ctk.CTkFrame(master=root, height=1200, width=300, fg_color='light blue')
+rightSide.place(relx=1, rely=0.5, anchor=ctk.E)
 
 coords = str(latitude) + "," + str(longitude)
 print(coords)

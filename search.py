@@ -3,7 +3,7 @@ import customtkinter as ctk
 import tkintermapview
 import requests
 import json
-
+from geopy.geocoders import Nominatim
 
 key = 'AIzaSyCRkh-Rq03zC0Leg6McXYuqsEYRM4f6Tok' #REMOVE KEY
 

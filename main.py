@@ -72,7 +72,7 @@ for i in range(len(locations)):
 map_widget.set_position(latitude, longitude)
 map_widget.set_zoom(15)
 #LightMode/DarkMode
-#customtkinter.set_appearance_mode("System")
+ctk.set_appearance_mode("dark")
 
 #Moving Side Menu - Source https://stackoverflow.com/questions/66858214/tkinter-side-bar
 min_w = 50 # Minimum width of the frame

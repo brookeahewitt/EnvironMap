@@ -4,6 +4,7 @@ import tkintermapview
 import requests
 import json
 
+
 key = 'AIzaSyCRkh-Rq03zC0Leg6McXYuqsEYRM4f6Tok' #REMOVE KEY
 
 url = 'https://maps.googleapis.com/maps/api/place/search/json'
@@ -53,3 +54,8 @@ def do_search(param_type, keyword, curr_location, radius):
         locations.append([name, address, lat, lng])
 
     return locations
+
+def search_address(address):
+    geolocator = Nominatim(user_agent="myGeocoder")
+    location = geolocator.geocode(address)
+    return [location.latitude, location.longitude]

@@ -26,11 +26,14 @@ for result in data['results']:
 #google maps starter code from https://github.com/TomSchimansky/TkinterMapView
 
 #create tkinter window
-root_tk = ctk.CTk()
-root_tk.geometry(f"{800}x{600}")
+root = ctk.CTk()
+root.geometry(f"{800}x{600}")
+root.resizable(width=False, height=False)
 
 #create a map widget
-map_widget = tkintermapview.TkinterMapView(root_tk, width=1200, height=1200, corner_radius=0)
+
+map_widget = tkintermapview.TkinterMapView(root, width=1800, height=1200, corner_radius=0)
+
 map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 #set map to google maps
@@ -40,5 +43,5 @@ map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z
 map_widget.set_position(38.033554, -78.507980)
 
 
-root_tk.mainloop()
+root.mainloop()
 

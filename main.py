@@ -29,14 +29,11 @@ ipInfo_access = json.loads(str(ipInfo))
 latitude = ipInfo_access['location']['latitude']
 longitude = ipInfo_access['location']['longitude']
 
-#set current widget position by address
-map_widget.set_position(latitude, longitude)
-
 
 coords = str(latitude) + "," + str(longitude)
 print(coords)
 
-locations = search.restaurant(coords)
+locations = search.parks(coords)
 markers = []
 for i in range(len(locations)):
     marker = "marker" + str(i)
@@ -48,6 +45,9 @@ for i in range(len(locations)):
     markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
     markers[i].set_text(locations[i][0])
 
+#set current widget position by address
+map_widget.set_position(latitude, longitude)
+map_widget.set_zoom(15)
 #LightMode/DarkMode
 #customtkinter.set_appearance_mode("System")
 

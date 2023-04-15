@@ -28,6 +28,11 @@ def transportation(curr_location):
     keyword = ''
     return do_search(param_type, keyword, curr_location)
 
+def parks(curr_location):
+    param_type = 'park'
+    keyword = ''
+    return do_search(param_type, keyword, curr_location)
+
 
 def do_search(param_type, keyword, curr_location):
     global radius, key

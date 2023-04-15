@@ -24,7 +24,7 @@ map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 #set map to google maps
 map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
-ipInfo_key = "tkln3hmqu74nehbl" #REMOVE KEY
+ipInfo_key = key #REMOVE KEY
 
 global latitude, longitude
 client = IpregistryClient(ipInfo_key)

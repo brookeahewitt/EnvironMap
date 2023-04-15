@@ -5,27 +5,11 @@ import requests
 import json
 
 
-key = "AIzaSyCRkh-Rq03zC0Leg6McXYuqsEYRM4f6Tok"
-
-url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-params = {
-    'location': '38.0293,78.4767',
-    'radius': '100',
-    'type': 'restaurant',
-    'key': key
-}
-
-response = requests.get(url, params=params)
-
-data = json.loads(response.text)
-for result in data['results']:
-    name = result['name']
-    address = result['vicinity']
-    print(name, address)
-
 #google maps starter code from https://github.com/TomSchimansky/TkinterMapView
 
 #create tkinter window
+import search
+
 root = ctk.CTk()
 root.geometry(f"{800}x{600}")
 root.resizable(width=False, height=False)
@@ -41,6 +25,17 @@ map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z
 
 #set current widget position by address (change to current)
 map_widget.set_position(38.033554, -78.507980)
+
+markers = []
+for i in range(len(search.locations)):
+    marker = "marker" + str(i)
+    markers.append(marker)
+
+print(markers)
+
+for i in range(len(search.locations)):
+    markers[i] = map_widget.set_position(search.locations[i][2], search.locations[i][3], marker=True)
+    markers[i].set_text(search.locations[i][0])
 
 
 root.mainloop()

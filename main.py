@@ -5,9 +5,9 @@ import tkintermapview
 #google maps starter code from https://github.com/TomSchimansky/TkinterMapView
 
 #create tkinter window
-root_tk = ctk.CTk()
-root_tk.title("EnvironMap")
-root_tk.geometry(f"{800}x{600}")
+root = ctk.CTk()
+root.title("EnvironMap")
+root.geometry(f"{800}x{600}")
 
 #create a map widget
 map_widget = tkintermapview.TkinterMapView(root_tk, width=600, height=400, corner_radius=0)
@@ -20,5 +20,5 @@ map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z
 map_widget.set_position(38.033554, -78.507980)
 
 
-root_tk.mainloop()
+root.mainloop()
 

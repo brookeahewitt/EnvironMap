@@ -17,6 +17,10 @@ def restaurant(curr_location):
     keyword = 'vegetarian|vegan|plant based'
     return do_search(param_type, keyword, curr_location)
 
+def parks(curr_location):
+    param_type = 'park'
+    keyword = ''
+    return do_search(param_type, keyword, curr_location)
 
 def shopping(curr_location):
     param_type = 'store'

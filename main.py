@@ -232,6 +232,11 @@ def fill():
         publicGardens_b.configure(text='Public Gardens', font=(0, 21))
         hikingTrails_b.configure(text='Hiking Trails', font=(0, 21))
 
+        back_food_b.configure(text='Back to Main Menu', font=(0, 21))
+        back_shopping_b.configure(text='Back to Main Menu', font=(0, 21))
+        back_transportation_b.configure(text='Back to Main Menu', font=(0, 21))
+        back_nature_b.configure(text='Back to Main Menu', font=(0, 21))
+
     else:
         # Bring the image back
         food_b.configure(text='', font=(0, 21))
@@ -251,6 +256,12 @@ def fill():
         publicGardens_b.configure(text='', font=(0, 21))
         hikingTrails_b.configure(text='', font=(0, 21))
 
+        back_food_b.configure(text='', font=(0, 21))
+        back_shopping_b.configure(text='', font=(0, 21))
+        back_transportation_b.configure(text='', font=(0, 21))
+        back_nature_b.configure(text='', font=(0, 21))
+
+
 root.update()  # For the width to get updated
 frame = Frame(root, bg='orange', width=50, height=root.winfo_height())
 frame.grid(row=0, column=0)
@@ -267,6 +278,7 @@ def showFoodMenu():
     foodSubframe.grid(row=0, column=0)
     restaurant_b.grid(row=0, column=0, pady=10)
     farmersMarket_b.grid(row=1, column=0, pady=10)
+    back_food_b.grid(row=2, column=0, pady=425)
     foodSubframe.bind('<Enter>', lambda e: expand())
     foodSubframe.bind('<Leave>', lambda e: contract())
 
@@ -275,6 +287,7 @@ def showShoppingMenu():
     frame.grid_remove()
     shoppingSubframe.grid(row=0, column=0)
     secondHand_b.grid(row=0, column=0, pady=10)
+    back_shopping_b.grid(row=1, column=0, pady=475)
     shoppingSubframe.bind('<Enter>', lambda e: expand())
     shoppingSubframe.bind('<Leave>', lambda e: contract())
 
@@ -285,6 +298,7 @@ def showTransportationMenu():
     busStops_b.grid(row=0, column=0, pady=10)
     trainsStations_b.grid(row=1, column=0, pady=10)
     bikeRoutes_b.grid(row=2, column=0, pady=10)
+    back_transportation_b.grid(row=3, column=0, pady=375)
     transportationSubframe.bind('<Enter>', lambda e: expand())
     transportationSubframe.bind('<Leave>', lambda e: contract())
 
@@ -295,8 +309,26 @@ def showNatureMenu():
     parks_b.grid(row=0, column=0, pady=10)
     publicGardens_b.grid(row=1, column=0, pady=10)
     hikingTrails_b.grid(row=2, column=0, pady=10)
+    back_nature_b.grid(row=3, column=0, pady=375)
     natureSubframe.bind('<Enter>', lambda e: expand())
     natureSubframe.bind('<Leave>', lambda e: contract())
+
+def backFoodButton():
+    foodSubframe.grid_remove()
+    frame.grid(row=0, column=0)
+
+def backShoppingButton():
+    shoppingSubframe.grid_remove()
+    frame.grid(row=0, column=0)
+
+def backTransportationButton():
+    transportationSubframe.grid_remove()
+    frame.grid(row=0, column=0)
+
+def backNatureButton():
+    natureSubframe.grid_remove()
+    frame.grid(row=0, column=0)
+
 
 # Make the buttons with the icons to be shown #PUT SUBMENUCOMMANDS HERE!!!
 food_b = ctk.CTkButton(frame,fg_color= 'orange', command=showFoodMenu)
@@ -315,6 +347,11 @@ nature_b = ctk.CTkButton(frame, fg_color='orange', command=showNatureMenu)
 parks_b = ctk.CTkButton(natureSubframe, fg_color='orange')
 publicGardens_b = ctk.CTkButton(natureSubframe, fg_color='orange')
 hikingTrails_b = ctk.CTkButton(natureSubframe, fg_color='orange')
+
+back_food_b = ctk.CTkButton(foodSubframe, fg_color='orange', command=backFoodButton)
+back_shopping_b = ctk.CTkButton(shoppingSubframe, fg_color='orange', command=backShoppingButton)
+back_transportation_b = ctk.CTkButton(transportationSubframe, fg_color='orange', command=backTransportationButton)
+back_nature_b = ctk.CTkButton(natureSubframe, fg_color='orange', command=backNatureButton)
 
 
 # Put them on the frame

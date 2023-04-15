@@ -68,8 +68,10 @@ def click_restaurant():
     locations = search.restaurant(coords)
     markers = []
     map_widget.delete_all_marker()
+    global right_labels
     for i in range(len(right_labels)):
         right_labels[i].destroy()
+    right_labels = []
     y_val = 0.1
     for i in range(len(locations)):
         if (y_val > 1):
@@ -90,8 +92,10 @@ def click_secondHand():
     locations = search.shopping(coords)
     markers = []
     map_widget.delete_all_marker()
+    global right_labels
     for i in range(len(right_labels)):
         right_labels[i].destroy()
+    right_labels = []
     y_val = 0.1
     for i in range(len(locations)):
         if (y_val > 1):
@@ -112,8 +116,10 @@ def click_busStops():
     locations = search.busStops(coords)
     markers = []
     map_widget.delete_all_marker()
+    global right_labels
     for i in range(len(right_labels)):
         right_labels[i].destroy()
+    right_labels = []
     y_val = 0.1
     for i in range(len(locations)):
         if (y_val > 1):
@@ -134,8 +140,10 @@ def click_trainStations():
     locations = search.trainStations(coords)
     markers = []
     map_widget.delete_all_marker()
+    global right_labels
     for i in range(len(right_labels)):
         right_labels[i].destroy()
+    right_labels = []
     y_val = 0.1
     for i in range(len(locations)):
         if (y_val > 1):
@@ -156,8 +164,10 @@ def click_bikeRoutes():
     locations = search.bikeRoutes(coords)
     markers = []
     map_widget.delete_all_marker()
+    global right_labels
     for i in range(len(right_labels)):
         right_labels[i].destroy()
+    right_labels = []
     y_val = 0.1
     for i in range(len(locations)):
         if (y_val > 1):
@@ -178,8 +188,10 @@ def click_parks():
     locations = search.parks(coords)
     markers = []
     map_widget.delete_all_marker()
+    global right_labels
     for i in range(len(right_labels)):
         right_labels[i].destroy()
+    right_labels = []
     y_val = 0.1
     for i in range(len(locations)):
         if (y_val > 1):
@@ -200,8 +212,10 @@ def click_gardens():
     locations = search.publicgardens(coords)
     markers = []
     map_widget.delete_all_marker()
+    global right_labels
     for i in range(len(right_labels)):
         right_labels[i].destroy()
+    right_labels = []
     y_val = 0.1
     for i in range(len(locations)):
         if (y_val > 1):
@@ -222,8 +236,10 @@ def click_hiking():
     locations = search.hiking(coords)
     markers = []
     map_widget.delete_all_marker()
+    global right_labels
     for i in range(len(right_labels)):
         right_labels[i].destroy()
+    right_labels = []
     y_val = 0.1
     for i in range(len(locations)):
         if (y_val > 1):

@@ -12,6 +12,9 @@ from ipregistry import IpregistryClient
 #create tkinter window
 import search
 
+global right_labels
+right_labels = []
+
 root = ctk.CTk()
 root.title("EnvironMap")
 root.geometry(f"{1400}x{800}")
@@ -24,7 +27,7 @@ map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 #set map to google maps
 map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
-ipInfo_key = key #REMOVE KEY
+ipInfo_key = 'tkln3hmqu74nehbl' #REMOVE KEY
 
 global latitude, longitude
 client = IpregistryClient(ipInfo_key)
@@ -61,45 +64,64 @@ places_label.place(relx=0.9, rely=0.03, anchor=ctk.CENTER)
 
 coords = str(latitude) + "," + str(longitude)
 print(coords)
+def click_restaurant():
+    locations = search.restaurant(coords)
+    markers = []
+    map_widget.delete_all_marker()
+    for i in range(len(right_labels)):
+        right_labels[i].destroy()
+    y_val = 0.1
+    for i in range(len(locations)):
+        if (y_val > 1):
+            break
+        location_text = locations[i][0] + "\n" + locations[i][1]
+        label = ctk.CTkLabel(master=root, text=location_text, width=120, height=25, fg_color=("white", "gray75"), corner_radius=8)
+        label.place(relx=0.9, rely=y_val, anchor=ctk.CENTER)
+        right_labels.append(label)
+        y_val += 0.05
+    for i in range(len(locations)):
+        marker = "marker" + str(i)
+        markers.append(marker)
+    for i in range(len(locations)):
+        markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
+        markers[i].set_text(locations[i][0])
 
-# CODE TO PUT IN BUTTON --------
-locations = search.restaurant(coords)
-print(locations)
-markers = []
-global right_labels
-right_labels = []
-map_widget.delete_all_marker()
-
-for i in range(len(right_labels)):
-    right_labels[i].destroy()
-
-y_val = 0.1
-
-for i in range(len(locations)):
-    if (y_val > 1):
-        break
-    location_text = locations[i][0] + "\n" + locations[i][1]
-    label = ctk.CTkLabel(master=root, text=location_text, width=120, height=25, fg_color=("white", "gray75"), corner_radius=8)
-    label.place(relx=0.9, rely=y_val, anchor=ctk.CENTER)
-    right_labels.append(label)
-    y_val += 0.05
-
-for i in range(len(locations)):
-    marker = "marker" + str(i)
-    markers.append(marker)
-
-for i in range(len(locations)):
-    markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
-    markers[i].set_text(locations[i][0])
-
-#END OF CODE TO PUT IN BUTTON -----------
+global text_size
+text_size=12
+def click_secondHand():
+    global text_size
+    size_of_text = text_size
+    locations = search.shopping(coords)
+    markers = []
+    map_widget.delete_all_marker()
+    for i in range(len(right_labels)):
+        right_labels[i].destroy()
+    y_val = 0.1
+    for i in range(len(locations)):
+        if (y_val > 1):
+            break
+        location_text = locations[i][0] + "\n" + locations[i][1]
+        label = ctk.CTkLabel(master=root, text=location_text, font=('Arial', text_size), width=120, height=25, fg_color=("white", "gray75"), corner_radius=8)
+        label.place(relx=0.9, rely=y_val, anchor=ctk.CENTER)
+        while label.winfo_reqwidth() > 280:
+            text_size -= 1
+            label.configure(font=('Arial', size_of_text))
+        size_of_text = text_size
+        right_labels.append(label)
+        y_val += 0.05
+    for i in range(len(locations)):
+        marker = "marker" + str(i)
+        markers.append(marker)
+    for i in range(len(locations)):
+        markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
+        markers[i].set_text(locations[i][0])
 
 #LightMode/DarkMode
 #customtkinter.set_appearance_mode("System")
 
 #Moving Side Menu - Source https://stackoverflow.com/questions/66858214/tkinter-side-bar
 min_w = 50 # Minimum width of the frame
-max_w = 365 # Maximum width of the frame
+max_w = 380 # Maximum width of the frame
 cur_width = min_w # Increasing width of the frame
 expanded = False # Check if it is completely expanded
 
@@ -220,11 +242,11 @@ def showNatureMenu():
 
 # Make the buttons with the icons to be shown #PUT SUBMENUCOMMANDS HERE!!!
 food_b = ctk.CTkButton(frame,fg_color= 'orange', command=showFoodMenu)
-restaurant_b = ctk.CTkButton(foodSubframe, fg_color='orange')
+restaurant_b = ctk.CTkButton(foodSubframe, fg_color='orange', command=click_restaurant)
 farmersMarket_b = ctk.CTkButton(foodSubframe, fg_color='orange')
 
 shopping_b = ctk.CTkButton(frame, fg_color='orange', command=showShoppingMenu)
-secondHand_b = ctk.CTkButton(shoppingSubframe, fg_color='orange')
+secondHand_b = ctk.CTkButton(shoppingSubframe, fg_color='orange', command=click_secondHand)
 
 transportation_b = ctk.CTkButton(frame, fg_color='orange', command=showTransportationMenu)
 busStops_b = ctk.CTkButton(transportationSubframe, fg_color='orange')

@@ -5,7 +5,7 @@ import requests
 import json
 from geopy.geocoders import Nominatim
 
-key = key #REMOVE KEY
+key = 'AIzaSyCRkh-Rq03zC0Leg6McXYuqsEYRM4f6Tok' #REMOVE KEY
 
 url = 'https://maps.googleapis.com/maps/api/place/search/json'
 

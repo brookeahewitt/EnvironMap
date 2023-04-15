@@ -23,20 +23,22 @@ map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 #set map to google maps
 map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
-#set current widget position by address (change to current)
-map_widget.set_position(38.033554, -78.507980)
 
+locations = search.restaurant()
 markers = []
-for i in range(len(search.locations)):
+for i in range(len(locations)):
     marker = "marker" + str(i)
     markers.append(marker)
 
 print(markers)
 
-for i in range(len(search.locations)):
-    markers[i] = map_widget.set_position(search.locations[i][2], search.locations[i][3], marker=True)
-    markers[i].set_text(search.locations[i][0])
+for i in range(len(locations)):
+    markers[i] = map_widget.set_position(locations[i][2], locations[i][3], marker=True)
+    markers[i].set_text(locations[i][0])
 
+#set current widget position by address (change to current)
+map_widget.set_position(38.03215, -78.48906)
+map_widget.set_zoom(19)
 
 root.mainloop()
 

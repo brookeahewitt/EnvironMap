@@ -1,4 +1,6 @@
 from tkinter import *
+
+import customtkinter
 import customtkinter as ctk
 import tkintermapview
 import requests
@@ -12,15 +14,16 @@ from ipregistry import IpregistryClient
 # create tkinter window
 import search
 
-radius = 81271.67
 
 root = ctk.CTk()
 root.title("EnvironMap")
-root.geometry(f"{800}x{600}")
+root.geometry(f"{1400}x{800}")
 root.resizable(width=False, height=False)
 
-# create a map widget
-map_widget = tkintermapview.TkinterMapView(root, width=1800, height=1200, corner_radius=0)
+
+#create a map widget
+map_widget = tkintermapview.TkinterMapView(root, width=2000, height=1400, corner_radius=0)
+
 map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 # set map to google maps
@@ -34,6 +37,8 @@ ipInfo = client.lookup()
 ipInfo_access = json.loads(str(ipInfo))
 latitude = ipInfo_access['location']['latitude']
 longitude = ipInfo_access['location']['longitude']
+
+map_widget.set_position(latitude, longitude)
 
 enterLocation = ctk.CTkEntry(master=root, placeholder_text="Search for a Location")
 enterLocation.pack(padx=20, pady=20)
@@ -49,17 +54,45 @@ def get_location():
     longitude = coords[1]
     map_widget.set_position(latitude, longitude)
 
+
 search_light = ImageTk.PhotoImage(Image.open('search_light.png').resize((70,70),Image.ANTIALIAS))
 
 get_location_button = ctk.CTkButton(master=root, width=80, height=32, fg_color=('#80ed99', '#57CC99'), hover_color=('#80ed99', '#57CC99'), border_width=0, corner_radius=8, image=search_light,
                                     text='', command=get_location)
 get_location_button.place(relx=0.68, rely=0.05, anchor=ctk.CENTER)
 
+rightSide = ctk.CTkFrame(master=root, height=1200, width=300, fg_color='light blue')
+rightSide.place(relx=1, rely=0.5, anchor=ctk.E)
+
+places_label = ctk.CTkLabel(master=root, text="Places", width=120, height=25, fg_color=("white", "gray75"), corner_radius=8)
+places_label.place(relx=0.9, rely=0.03, anchor=ctk.CENTER)
+
 coords = str(latitude) + "," + str(longitude)
 print(coords)
 
-locations = search.parks(coords, radius)
 markers = []
+
+# CODE TO PUT IN BUTTON --------
+
+print(locations)
+markers = []
+global right_labels
+right_labels = []
+map_widget.delete_all_marker()
+
+for i in range(len(right_labels)):
+    right_labels[i].destroy()
+
+y_val = 0.1
+
+for i in range(len(locations)):
+    if (y_val > 1):
+        break
+    location_text = locations[i][0] + "\n" + locations[i][1]
+    label = ctk.CTkLabel(master=root, text=location_text, width=120, height=25, fg_color=("white", "gray75"), corner_radius=8)
+    label.place(relx=0.9, rely=y_val, anchor=ctk.CENTER)
+    right_labels.append(label)
+    y_val += 0.05
 
 for i in range(len(locations)):
     marker = "marker" + str(i)
@@ -80,6 +113,7 @@ min_w = 50  # Minimum width of the frame
 max_w = 365  # Maximum width of the frame
 cur_width = min_w  # Increasing width of the frame
 expanded = False  # Check if it is completely expanded
+
 
 
 def expand():
@@ -132,6 +166,11 @@ def fill():
         publicGardens_b.configure(text='Public Gardens', font=(0, 21))
         hikingTrails_b.configure(text='Hiking Trails', font=(0, 21))
 
+        back_food_b.configure(text='Back to Main Menu', font=(0, 21))
+        back_shopping_b.configure(text='Back to Main Menu', font=(0, 21))
+        back_transportation_b.configure(text='Back to Main Menu', font=(0, 21))
+        back_nature_b.configure(text='Back to Main Menu', font=(0, 21))
+
     else:
         # Bring the image back
         food_b.configure(text='', font=(0, 21))
@@ -151,6 +190,10 @@ def fill():
         publicGardens_b.configure(text='', font=(0, 21))
         hikingTrails_b.configure(text='', font=(0, 21))
 
+        back_food_b.configure(text='', font=(0, 21))
+        back_shopping_b.configure(text='', font=(0, 21))
+        back_transportation_b.configure(text='', font=(0, 21))
+        back_nature_b.configure(text='', font=(0, 21))
 
 root.update()  # For the width to get updated
 frame = ctk.CTkFrame(root, fg_color=('#80ed99', '#57CC99'), width=50, height=root.winfo_height())
@@ -169,6 +212,7 @@ def showFoodMenu():
     foodSubframe.grid(row=0, column=0)
     restaurant_b.grid(row=0, column=0, pady=10)
     farmersMarket_b.grid(row=1, column=0, pady=10)
+    back_food_b.grid(row=2, column=0, pady=425)
     foodSubframe.bind('<Enter>', lambda e: expand())
     foodSubframe.bind('<Leave>', lambda e: contract())
 
@@ -178,6 +222,7 @@ def showShoppingMenu():
     frame.grid_remove()
     shoppingSubframe.grid(row=0, column=0)
     secondHand_b.grid(row=0, column=0, pady=10)
+    back_shopping_b.grid(row=1, column=0, pady=475)
     shoppingSubframe.bind('<Enter>', lambda e: expand())
     shoppingSubframe.bind('<Leave>', lambda e: contract())
 
@@ -189,6 +234,7 @@ def showTransportationMenu():
     busStops_b.grid(row=0, column=0, pady=10)
     trainsStations_b.grid(row=1, column=0, pady=10)
     bikeRoutes_b.grid(row=2, column=0, pady=10)
+    back_transportation_b.grid(row=3, column=0, pady=375)
     transportationSubframe.bind('<Enter>', lambda e: expand())
     transportationSubframe.bind('<Leave>', lambda e: contract())
 
@@ -200,8 +246,29 @@ def showNatureMenu():
     parks_b.grid(row=0, column=0, pady=10)
     publicGardens_b.grid(row=1, column=0, pady=10)
     hikingTrails_b.grid(row=2, column=0, pady=10)
+    back_nature_b.grid(row=3, column=0, pady=375)
     natureSubframe.bind('<Enter>', lambda e: expand())
     natureSubframe.bind('<Leave>', lambda e: contract())
+
+
+def backFoodButton():
+    foodSubframe.grid_remove()
+    frame.grid(row=0, column=0)
+
+
+def backShoppingButton():
+    shoppingSubframe.grid_remove()
+    frame.grid(row=0, column=0)
+
+
+def backTransportationButton():
+    transportationSubframe.grid_remove()
+    frame.grid(row=0, column=0)
+
+
+def backNatureButton():
+    natureSubframe.grid_remove()
+    frame.grid(row=0, column=0)
 
 
 # Make the buttons with the icons to be shown #PUT SUBMENUCOMMANDS HERE!!!
@@ -231,6 +298,12 @@ hikingTrails_b = ctk.CTkButton(natureSubframe, fg_color=('#80ed99', '#57CC99'))
 logo_light = ImageTk.PhotoImage(Image.open('logo_light.png'),Image.ANTIALIAS)
 logo_label = ctk.CTkLabel(master=root, image=logo_light, text="")
 logo_label.place(relx=0.5, rely=0.95, anchor=ctk.CENTER)
+
+back_food_b = ctk.CTkButton(foodSubframe, fg_color='orange', command=backFoodButton)
+back_shopping_b = ctk.CTkButton(shoppingSubframe, fg_color='orange', command=backShoppingButton)
+back_transportation_b = ctk.CTkButton(transportationSubframe, fg_color='orange', command=backTransportationButton)
+back_nature_b = ctk.CTkButton(natureSubframe, fg_color='orange', command=backNatureButton)
+
 
 # Put them on the frame
 food_b.grid(row=0, column=0, pady=10)

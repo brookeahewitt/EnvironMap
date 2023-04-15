@@ -25,10 +25,24 @@ def shopping(curr_location):
 
 
 def transportation(curr_location):
-    param_type = 'bicycle_store|bus_station'
+    param_type = 'bicycle_store|bus_station|train_station'
     keyword = ''
     return do_search(param_type, keyword, curr_location)
 
+def bikeRoutes(curr_location):
+    param_type = 'bicycle_store'
+    keyword = ''
+    return do_search(param_type, keyword, curr_location)
+
+def busStops(curr_location):
+    param_type = 'bus_station'
+    keyword = ''
+    return do_search(param_type, keyword, curr_location)
+
+def trainStations(curr_location):
+    param_type = 'train_station'
+    keyword = ''
+    return do_search(param_type, keyword, curr_location)
 
 def do_search(param_type, keyword, curr_location):
     global radius, key

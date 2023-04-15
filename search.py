@@ -4,34 +4,33 @@ import tkintermapview
 import requests
 import json
 
-
+key = 'AIzaSyCRkh-Rq03zC0Leg6McXYuqsEYRM4f6Tok' #REMOVE KEY
 
 url = 'https://maps.googleapis.com/maps/api/place/search/json'
 
-radius = '392186.9'
-curr_location = '38.03215, -78.48906'
+radius = '20000'
 
 
-def restaurant():
+def restaurant(curr_location):
     param_type = 'restaurant|cafe'
     keyword = 'vegetarian|vegan|plant based'
-    return do_search(param_type, keyword)
+    return do_search(param_type, keyword, curr_location)
 
 
-def shopping():
+def shopping(curr_location):
     param_type = 'store'
     keyword = 'second hand|used|thrift|vintage'
-    return do_search(param_type, keyword)
+    return do_search(param_type, keyword, curr_location)
 
 
-def transportation():
+def transportation(curr_location):
     param_type = 'bicycle_store|bus_station'
     keyword = ''
-    return do_search(param_type, keyword)
+    return do_search(param_type, keyword, curr_location)
 
 
-def do_search(param_type, keyword):
-    global radius, curr_location, key
+def do_search(param_type, keyword, curr_location):
+    global radius, key
     params = {
         'location': curr_location,
         'radius': radius,

@@ -1,4 +1,5 @@
-import tkinter
+from tkinter import *
+import customtkinter as ctk
 import tkintermapview
 
 #google maps starter code from https://github.com/TomSchimansky/TkinterMapView
@@ -6,11 +7,12 @@ import tkintermapview
 #create tkinter window
 root_tk = tkinter.Tk()
 root_tk.title("EnvironMap")
+root_tk = ctk.CTk()
 root_tk.geometry(f"{800}x{600}")
 
 #create a map widget
 map_widget = tkintermapview.TkinterMapView(root_tk, width=600, height=400, corner_radius=0)
-map_widget.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
+map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 #set map to google maps
 map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)

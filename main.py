@@ -5,9 +5,8 @@ import tkintermapview
 #google maps starter code from https://github.com/TomSchimansky/TkinterMapView
 
 #create tkinter window
-root_tk = tkinter.Tk()
-root_tk.title("EnvironMap")
 root_tk = ctk.CTk()
+root_tk.title("EnvironMap")
 root_tk.geometry(f"{800}x{600}")
 
 #create a map widget

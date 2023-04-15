@@ -24,9 +24,9 @@ map_widget.place(relx=0.5, rely=0.5, anchor=CENTER)
 #set map to google maps
 map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
-global latitude, longitude
+ipInfo_key = key #REMOVE KEY
 
-ipInfo_key = 'tkln3hmqu74nehbl' #REMOVE KEY
+global latitude, longitude
 client = IpregistryClient(ipInfo_key)
 ipInfo = client.lookup()
 ipInfo_access = json.loads(str(ipInfo))
@@ -108,6 +108,10 @@ def expand():
     cur_width += 10 # Increase the width by 10
     rep = root.after(5,expand) # Repeat this func every 5 ms
     frame.config(width=cur_width) # Change the width to new increase width
+    foodSubframe.config(width=cur_width)
+    shoppingSubframe.config(width=cur_width)
+    transportationSubframe.config(width=cur_width)
+    natureSubframe.config(width=cur_width)
     if cur_width >= max_w: # If width is greater than maximum width
         expanded = True # Frame is expended
         root.after_cancel(rep) # Stop repeating the func
@@ -118,6 +122,10 @@ def contract():
     cur_width -= 10 # Reduce the width by 10
     rep = root.after(5,contract) # Call this func every 5 ms
     frame.config(width=cur_width) # Change the width to new reduced width
+    foodSubframe.config(width=cur_width)
+    shoppingSubframe.config(width=cur_width)
+    transportationSubframe.config(width=cur_width)
+    natureSubframe.config(width=cur_width)
     if cur_width <= min_w: # If it is back to normal width
         expanded = False # Frame is not expanded
         root.after_cancel(rep) # Stop repeating the func
@@ -125,42 +133,109 @@ def contract():
 
 
 def fill():
-    if expanded:  # If the frame is exanded
+    if expanded:  # If the frame is expanded
     # Show a text, and remove the image
         food_b.configure(text='Food', font=(0, 21))
+        restaurant_b.configure(text='Restaurants', font=(0, 21))
+        farmersMarket_b.configure(text='Farmers Market', font=(0, 21))
+
         shopping_b.configure(text='Shopping', font=(0, 21))
+        secondHand_b.configure(text='Second Hand Stores', font=(0, 21))
+
         transportation_b.configure(text='Transportation', font=(0, 21))
+        busStops_b.configure(text='Bus Stops', font=(0, 21))
+        trainsStations_b.configure(text='Train Stations', font=(0, 21))
+        bikeRoutes_b.configure(text='Bike Routes', font=(0, 21))
+
         nature_b.configure(text='Nature', font=(0, 21))
+        parks_b.configure(text='Parks', font=(0, 21))
+        publicGardens_b.configure(text='Public Gardens', font=(0, 21))
+        hikingTrails_b.configure(text='Hiking Trails', font=(0, 21))
+
     else:
         # Bring the image back
-        food_b.configure(text='', font=(0, 21),)
+        food_b.configure(text='', font=(0, 21))
+        restaurant_b.configure(text='', font=(0, 21))
+        farmersMarket_b.configure(text='', font=(0, 21))
+
         shopping_b.configure(text='', font=(0, 21))
-        transportation_b.configure(text='',font=(0, 21))
+        secondHand_b.configure(text='', font=(0, 21))
+
+        transportation_b.configure(text='', font=(0, 21))
+        busStops_b.configure(text='', font=(0, 21))
+        trainsStations_b.configure(text='', font=(0, 21))
+        bikeRoutes_b.configure(text='', font=(0, 21))
+
         nature_b.configure(text='', font=(0, 21))
+        parks_b.configure(text='', font=(0, 21))
+        publicGardens_b.configure(text='', font=(0, 21))
+        hikingTrails_b.configure(text='', font=(0, 21))
 
 root.update()  # For the width to get updated
 frame = Frame(root, bg='orange', width=50, height=root.winfo_height())
 frame.grid(row=0, column=0)
 
 #Sub Menus
-subframe = Frame(root, bg='blue', width=50, height=root.winfo_height())
-subframe.grid(row=0, column=5)
+foodSubframe = Frame(root, bg='blue', width=50, height=root.winfo_height())
+shoppingSubframe = Frame(root, bg='red', width=50, height=root.winfo_height())
+transportationSubframe = Frame(root, bg='yellow', width=50, height=root.winfo_height())
+natureSubframe = Frame(root, bg='green', width=50, height=root.winfo_height())
+
 #Food
 def showFoodMenu():
-    restaurant_b = Button(frame, text="", bg='orange', relief='flat', font=(0, 21))  # add command
-    if expanded:
-        restaurant_b.config(text='Restaurants', font=(0, 21)) #add command
-        restaurant_b.grid(row=0, column=2, pady=10)
-    else:
-        restaurant_b.config(text='', font=(0, 21))  # add command
-        restaurant_b.destroy() #don't have command here
+    frame.grid_remove()
+    foodSubframe.grid(row=0, column=0)
+    restaurant_b.grid(row=0, column=0, pady=10)
+    farmersMarket_b.grid(row=1, column=0, pady=10)
+    foodSubframe.bind('<Enter>', lambda e: expand())
+    foodSubframe.bind('<Leave>', lambda e: contract())
 
+#Shopping
+def showShoppingMenu():
+    frame.grid_remove()
+    shoppingSubframe.grid(row=0, column=0)
+    secondHand_b.grid(row=0, column=0, pady=10)
+    shoppingSubframe.bind('<Enter>', lambda e: expand())
+    shoppingSubframe.bind('<Leave>', lambda e: contract())
 
-# Make the buttons with the icons to be shown
+#Transporation
+def showTransportationMenu():
+    frame.grid_remove()
+    transportationSubframe.grid(row=0, column=0)
+    busStops_b.grid(row=0, column=0, pady=10)
+    trainsStations_b.grid(row=1, column=0, pady=10)
+    bikeRoutes_b.grid(row=2, column=0, pady=10)
+    transportationSubframe.bind('<Enter>', lambda e: expand())
+    transportationSubframe.bind('<Leave>', lambda e: contract())
+
+#Nature
+def showNatureMenu():
+    frame.grid_remove()
+    natureSubframe.grid(row=0, column=0)
+    parks_b.grid(row=0, column=0, pady=10)
+    publicGardens_b.grid(row=1, column=0, pady=10)
+    hikingTrails_b.grid(row=2, column=0, pady=10)
+    natureSubframe.bind('<Enter>', lambda e: expand())
+    natureSubframe.bind('<Leave>', lambda e: contract())
+
+# Make the buttons with the icons to be shown #PUT SUBMENUCOMMANDS HERE!!!
 food_b = ctk.CTkButton(frame,fg_color= 'orange', command=showFoodMenu)
-shopping_b = ctk.CTkButton(frame, fg_color='orange')
-transportation_b = ctk.CTkButton(frame, fg_color='orange')
-nature_b = ctk.CTkButton(frame, fg_color='orange')
+restaurant_b = ctk.CTkButton(foodSubframe, fg_color='orange')
+farmersMarket_b = ctk.CTkButton(foodSubframe, fg_color='orange')
+
+shopping_b = ctk.CTkButton(frame, fg_color='orange', command=showShoppingMenu)
+secondHand_b = ctk.CTkButton(shoppingSubframe, fg_color='orange')
+
+transportation_b = ctk.CTkButton(frame, fg_color='orange', command=showTransportationMenu)
+busStops_b = ctk.CTkButton(transportationSubframe, fg_color='orange')
+trainsStations_b = ctk.CTkButton(transportationSubframe, fg_color='orange')
+bikeRoutes_b = ctk.CTkButton(transportationSubframe, fg_color='orange')
+
+nature_b = ctk.CTkButton(frame, fg_color='orange', command=showNatureMenu)
+parks_b = ctk.CTkButton(natureSubframe, fg_color='orange')
+publicGardens_b = ctk.CTkButton(natureSubframe, fg_color='orange')
+hikingTrails_b = ctk.CTkButton(natureSubframe, fg_color='orange')
+
 
 # Put them on the frame
 food_b.grid(row=0, column=0, pady=10)
@@ -174,6 +249,11 @@ frame.bind('<Leave>', lambda e: contract())
 
 # So that it does not depend on the widgets inside the frame
 frame.grid_propagate(False)
+foodSubframe.grid_propagate(False)
+shoppingSubframe.grid_propagate(False)
+transportationSubframe.grid_propagate(False)
+natureSubframe.grid_propagate(False)
+
 
 
 root.mainloop()

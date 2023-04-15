@@ -37,6 +37,7 @@ enterLocation.pack(padx=20, pady=20)
 enterLocation.place(relx=0.5, rely=0.05, anchor=ctk.CENTER)
 def get_location():
     wanted_area = enterLocation.get()
+
     enterLocation.delete(0, END)
 
 
